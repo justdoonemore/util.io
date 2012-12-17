@@ -1,0 +1,21 @@
+<binding>
+
+	<format type="com.jdom.util.locator.strategies.Locator"
+		serializer="com.jdom.util.locator.strategies.LocatorSerializer.serialize"
+		deserializer="com.jdom.util.locator.strategies.LocatorSerializer.deserialize" />
+
+	<mapping name="ServiceFactoryConfig" class="com.jdom.util.locator.ServiceFactoryConfig"
+		pre-get="prepareLocatorLookups" post-set="restoreFromLocatorLookups">
+		<value style="attribute" name="default-locator" field="defaultLocator" />
+		<structure name="Services">
+			<collection field="locatorLookups" type="java.util.HashSet"
+				item-type="com.jdom.util.locator.LocatorLookup" />
+		</structure>
+	</mapping>
+
+	<mapping name="Service" class="com.jdom.util.locator.LocatorLookup">
+		<value style="attribute" name="name" field="className" />
+		<value style="attribute" name="locator" field="locator" />
+	</mapping>
+
+</binding>

@@ -1,0 +1,4 @@
+<ServiceFactoryConfig default-locator="com.jdom.util.locator.strategies.PojoLocator">
+	<Services>
+	</Services>
+</ServiceFactoryConfig>

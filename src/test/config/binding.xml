@@ -1,0 +1,11 @@
+<binding>
+    <mapping name="ClassOne" class="com.jdom.test.jibx.ClassOne">
+        <value name="TestString" field="testString" />
+        <value name="TestLong" field="testLong" />
+        <structure field="classTwo" />
+    </mapping>
+    
+    <mapping name="ClassTwo" class="com.jdom.test.jibx.dep.ClassTwo">
+        <value name="ItsString" field="itsString" />
+    </mapping>
+</binding>
