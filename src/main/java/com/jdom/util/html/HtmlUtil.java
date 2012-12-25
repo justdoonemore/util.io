@@ -25,7 +25,7 @@ import java.util.Collection;
 import org.apache.commons.httpclient.HttpClient;
 import org.apache.commons.httpclient.HttpStatus;
 import org.apache.commons.httpclient.methods.GetMethod;
-import org.apache.log4j.Logger;
+import com.jdom.logging.api.LogFactory;import com.jdom.logging.api.Logger;
 
 import com.jdom.util.file.FileUtils;
 import com.jdom.util.io.IOUtil;
@@ -33,7 +33,7 @@ import com.jdom.util.regex.RegexMatch;
 import com.jdom.util.regex.RegexUtil;
 
 public class HtmlUtil {
-	private static final Logger LOG = Logger.getLogger(HtmlUtil.class);
+	private static final Logger LOG = LogFactory.getLogger(HtmlUtil.class);
 
 	public static final String BREAK_TAG = "<br/>";
 

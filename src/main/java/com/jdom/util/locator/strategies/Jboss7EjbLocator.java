@@ -19,7 +19,7 @@ import java.io.InputStream;
 import java.util.Properties;
 import java.util.regex.Pattern;
 
-import org.apache.log4j.Logger;
+import com.jdom.logging.api.LogFactory;import com.jdom.logging.api.Logger;
 
 import com.jdom.util.io.IOUtil;
 import com.jdom.util.properties.PropertiesUtil;
@@ -39,7 +39,7 @@ import com.jdom.util.properties.PropertiesUtil;
 public class Jboss7EjbLocator extends LocalEjbLocator {
 	private static final Class<Jboss7EjbLocator> CLASS = Jboss7EjbLocator.class;
 
-	private static final Logger LOG = Logger.getLogger(CLASS);
+	private static final Logger LOG = LogFactory.getLogger(CLASS);
 
 	private static final Pattern REPLACE_SERVICE_PATTERN = Pattern
 			.compile("Service$");

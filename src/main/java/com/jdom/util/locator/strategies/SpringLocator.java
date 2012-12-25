@@ -15,7 +15,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */package com.jdom.util.locator.strategies;
 
-import org.apache.log4j.Logger;
+import com.jdom.logging.api.LogFactory;import com.jdom.logging.api.Logger;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
@@ -27,7 +27,7 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
  * 
  */
 public class SpringLocator implements Locator {
-	private static final Logger LOG = Logger.getLogger(SpringLocator.class);
+	private static final Logger LOG = LogFactory.getLogger(SpringLocator.class);
 
 	private static final String APPLICATION_CONTEXT_XML = "applicationContext.xml";
 	private static volatile ApplicationContext appContext;

@@ -26,14 +26,14 @@ import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.util.Collection;
 
-import org.apache.log4j.Logger;
+import com.jdom.logging.api.LogFactory;import com.jdom.logging.api.Logger;
 
 import com.jdom.util.file.FileUtils;
 import com.jdom.util.file.FileWrapper;
 
 public class FileFixture {
 
-    private static final Logger LOG = Logger.getLogger(FileFixture.class);
+    private static final Logger LOG = LogFactory.getLogger(FileFixture.class);
 
     private static final int MAX_READ_BUFFER = 1048576;
 

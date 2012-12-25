@@ -13,200 +13,216 @@
  *
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
- */package com.jdom.util.file;
+ */
+package com.jdom.util.file;
 
 import java.io.File;
 import java.io.IOException;
 import java.net.URI;
 
 import org.apache.commons.io.FileExistsException;
-import org.apache.log4j.Logger;
+
+import com.jdom.logging.api.LogFactory;
+import com.jdom.logging.api.Logger;
 
 public class FileWrapper extends File {
 
-    private static final Logger LOG = Logger.getLogger(FileWrapper.class);
+	private static final Logger LOG = LogFactory.getLogger(FileWrapper.class);
 
-    /**
-     * serialVersionUID.
-     */
-    private static final long serialVersionUID = 8796098653988152718L;
+	/**
+	 * serialVersionUID.
+	 */
+	private static final long serialVersionUID = 8796098653988152718L;
 
-    private String baseName;
+	private String baseName;
 
-    private String extension;
+	private String extension;
 
-    public FileWrapper(File file) {
-        super(file.getAbsolutePath());
+	public FileWrapper(File file) {
+		super(file.getAbsolutePath());
 
-        setupExtension();
-    }
+		setupExtension();
+	}
 
-    public FileWrapper(File parent, String child) {
-        super(parent, child);
+	public FileWrapper(File parent, String child) {
+		super(parent, child);
 
-        setupExtension();
-    }
+		setupExtension();
+	}
 
-    public FileWrapper(String parent, String child) {
-        super(parent, child);
+	public FileWrapper(String parent, String child) {
+		super(parent, child);
 
-        setupExtension();
-    }
+		setupExtension();
+	}
 
-    public FileWrapper(String pathname) {
-        super(pathname);
+	public FileWrapper(String pathname) {
+		super(pathname);
 
-        setupExtension();
-    }
+		setupExtension();
+	}
 
-    public FileWrapper(URI uri) {
-        super(uri);
+	public FileWrapper(URI uri) {
+		super(uri);
 
-        setupExtension();
-    }
+		setupExtension();
+	}
 
-    private void setupExtension() {
-        String filename = this.getName();
-        int indexOfExtension = filename.lastIndexOf(".");
+	private void setupExtension() {
+		String filename = this.getName();
+		int indexOfExtension = filename.lastIndexOf(".");
 
-        if (indexOfExtension != -1) {
-            baseName = filename.substring(0, indexOfExtension);
-            extension = filename.substring(indexOfExtension);
-        } else {
-            baseName = filename;
-        }
-    }
+		if (indexOfExtension != -1) {
+			baseName = filename.substring(0, indexOfExtension);
+			extension = filename.substring(indexOfExtension);
+		} else {
+			baseName = filename;
+		}
+	}
 
-    /**
-     * Determine whether the file has been modified since the specified milliseconds ago.
-     * 
-     * @param milliseconds
-     *            the milliseconds the file must have been modified in to return true
-     * @return true if the file has been modified in the last specified milliseconds
-     */
-    public boolean hasBeenModifiedSince(long milliseconds) {
-        if (this.isFile()) {
-            return hasFileBeenModifiedSince(milliseconds);
-        } else if (this.isDirectory()) {
-            return hasDirectoryBeenModifiedSince(milliseconds);
-        } else {
-            throw new FileException("File does not seem to be a directory or a file!");
-        }
-    }
+	/**
+	 * Determine whether the file has been modified since the specified
+	 * milliseconds ago.
+	 * 
+	 * @param milliseconds
+	 *            the milliseconds the file must have been modified in to return
+	 *            true
+	 * @return true if the file has been modified in the last specified
+	 *         milliseconds
+	 */
+	public boolean hasBeenModifiedSince(long milliseconds) {
+		if (this.isFile()) {
+			return hasFileBeenModifiedSince(milliseconds);
+		} else if (this.isDirectory()) {
+			return hasDirectoryBeenModifiedSince(milliseconds);
+		} else {
+			throw new FileException(
+					"File does not seem to be a directory or a file!");
+		}
+	}
 
-    public void copyTo(File directory) {
-        if (this.isFile()) {
-            copyFileTo(directory);
-        } else if (this.isDirectory()) {
-            copyDirectoryTo(directory);
-        } else {
-            throw new FileException("File does not seem to be a directory or a file!");
-        }
-    }
+	public void copyTo(File directory) {
+		if (this.isFile()) {
+			copyFileTo(directory);
+		} else if (this.isDirectory()) {
+			copyDirectoryTo(directory);
+		} else {
+			throw new FileException(
+					"File does not seem to be a directory or a file!");
+		}
+	}
 
-    public void moveTo(File destination) {
-        moveTo(destination, false);
-    }
+	public void moveTo(File destination) {
+		moveTo(destination, false);
+	}
 
-    public void moveTo(File destination, boolean ignoreIfAlreadyExists) {
-        try {
-            if (this.isDirectory()) {
-                for (File file : this.listFiles()) {
+	public void moveTo(File destination, boolean ignoreIfAlreadyExists) {
+		try {
+			if (this.isDirectory()) {
+				for (File file : this.listFiles()) {
 
-                    if (file.isDirectory()) {
-                        new FileWrapper(file).moveTo(new File(destination, file.getName()), ignoreIfAlreadyExists);
-                    } else {
-                        try {
-                            org.apache.commons.io.FileUtils.moveFileToDirectory(file, destination, true);
-                        } catch (FileExistsException fee) {
-                            if (ignoreIfAlreadyExists) {
-                                LOG.debug("Not overwriting file with same name, silently deleting...");
-                            } else {
-                                throw fee;
-                            }
-                        }
-                    }
-                }
-                org.apache.commons.io.FileUtils.forceDelete(this);
-            } else {
-                try {
-                    org.apache.commons.io.FileUtils.moveFile(this, destination);
-                } catch (FileExistsException fee) {
-                    if (ignoreIfAlreadyExists) {
-                        LOG.debug("Not overwriting file with same name, silently deleting...");
-                        org.apache.commons.io.FileUtils.forceDelete(this);
-                    } else {
-                        throw fee;
-                    }
-                }
-            }
-        } catch (IOException e) {
-            throw new IllegalArgumentException(e);
-        }
-    }
+					if (file.isDirectory()) {
+						new FileWrapper(file).moveTo(
+								new File(destination, file.getName()),
+								ignoreIfAlreadyExists);
+					} else {
+						try {
+							org.apache.commons.io.FileUtils
+									.moveFileToDirectory(file, destination,
+											true);
+						} catch (FileExistsException fee) {
+							if (ignoreIfAlreadyExists) {
+								LOG.debug("Not overwriting file with same name, silently deleting...");
+							} else {
+								throw fee;
+							}
+						}
+					}
+				}
+				org.apache.commons.io.FileUtils.forceDelete(this);
+			} else {
+				try {
+					org.apache.commons.io.FileUtils.moveFile(this, destination);
+				} catch (FileExistsException fee) {
+					if (ignoreIfAlreadyExists) {
+						LOG.debug("Not overwriting file with same name, silently deleting...");
+						org.apache.commons.io.FileUtils.forceDelete(this);
+					} else {
+						throw fee;
+					}
+				}
+			}
+		} catch (IOException e) {
+			throw new IllegalArgumentException(e);
+		}
+	}
 
-    private void copyDirectoryTo(File directory) {
-        FileUtils.copyDirectory(this, directory);
-    }
+	private void copyDirectoryTo(File directory) {
+		FileUtils.copyDirectory(this, directory);
+	}
 
-    private void copyFileTo(File destination) {
+	private void copyFileTo(File destination) {
 
-        byte[] contents = FileUtils.readFileFully(this);
+		byte[] contents = FileUtils.readFileFully(this);
 
-        FileUtils.writeFileToDisk(destination, contents);
-    }
+		FileUtils.writeFileToDisk(destination, contents);
+	}
 
-    private boolean hasDirectoryBeenModifiedSince(long milliseconds) {
-        boolean modifiedSince = false;
+	private boolean hasDirectoryBeenModifiedSince(long milliseconds) {
+		boolean modifiedSince = false;
 
-        File[] filesInDirectory = FileUtils.getFilesRecursivelyFromDirectory(this);
+		File[] filesInDirectory = FileUtils
+				.getFilesRecursivelyFromDirectory(this);
 
-        for (File file : filesInDirectory) {
-            FileWrapper wrappedFile = new FileWrapper(file);
+		for (File file : filesInDirectory) {
+			FileWrapper wrappedFile = new FileWrapper(file);
 
-            if (wrappedFile.hasBeenModifiedSince(milliseconds)) {
-                modifiedSince = true;
-                break;
-            }
-        }
+			if (wrappedFile.hasBeenModifiedSince(milliseconds)) {
+				modifiedSince = true;
+				break;
+			}
+		}
 
-        return modifiedSince;
-    }
+		return modifiedSince;
+	}
 
-    private boolean hasFileBeenModifiedSince(long milliseconds) {
-        long greatestAllowableLastModified = System.currentTimeMillis() - milliseconds;
+	private boolean hasFileBeenModifiedSince(long milliseconds) {
+		long greatestAllowableLastModified = System.currentTimeMillis()
+				- milliseconds;
 
-        long fileLastModified = this.lastModified();
+		long fileLastModified = this.lastModified();
 
-        if (LOG.isDebugEnabled()) {
-            LOG.debug("File last modified [" + fileLastModified + "] greatest allowable last modified ["
-                    + greatestAllowableLastModified + "]");
-        }
+		if (LOG.isDebugEnabled()) {
+			LOG.debug("File last modified [" + fileLastModified
+					+ "] greatest allowable last modified ["
+					+ greatestAllowableLastModified + "]");
+		}
 
-        boolean modifiedSinceGreatestAllowable = fileLastModified > greatestAllowableLastModified;
+		boolean modifiedSinceGreatestAllowable = fileLastModified > greatestAllowableLastModified;
 
-        if (LOG.isDebugEnabled()) {
-            LOG.debug("Has the file has been modified since [" + greatestAllowableLastModified + "]? "
-                    + modifiedSinceGreatestAllowable);
-        }
+		if (LOG.isDebugEnabled()) {
+			LOG.debug("Has the file has been modified since ["
+					+ greatestAllowableLastModified + "]? "
+					+ modifiedSinceGreatestAllowable);
+		}
 
-        return modifiedSinceGreatestAllowable;
-    }
+		return modifiedSinceGreatestAllowable;
+	}
 
-    public String getBaseName() {
-        return baseName;
-    }
+	public String getBaseName() {
+		return baseName;
+	}
 
-    public void setBaseName(String baseName) {
-        this.baseName = baseName;
-    }
+	public void setBaseName(String baseName) {
+		this.baseName = baseName;
+	}
 
-    public String getExtension() {
-        return extension;
-    }
+	public String getExtension() {
+		return extension;
+	}
 
-    public void setExtension(String extension) {
-        this.extension = extension;
-    }
+	public void setExtension(String extension) {
+		this.extension = extension;
+	}
 
 }

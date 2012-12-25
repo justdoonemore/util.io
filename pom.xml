@@ -4,15 +4,16 @@
 
 	<groupId>com.jdom</groupId>
 	<artifactId>util.io</artifactId>
-	<version>0.0.1</version>
+	<version>0.0.2</version>
 	<description>Common Utilities for I/O</description>
 
 	<properties>
 		<commons.io.version>2.1</commons.io.version>
 		<commons.httpclient.version>3.1</commons.httpclient.version>
 		<javax.mail.version>1.4.4</javax.mail.version>
-		<log4j.version>1.2.16</log4j.version>
 		<jibx.version>1.2.3</jibx.version>
+		<util.lang.version>0.0.2</util.lang.version>
+		<util.log.log4j.version>0.0.1</util.log.log4j.version>
 		<org.springframework.version>3.1.2.RELEASE</org.springframework.version>
 		<junit.version>4.10</junit.version>
 		<jmock.version>2.5.1</jmock.version>
@@ -129,12 +130,12 @@
 		<dependency>
 			<groupId>com.jdom</groupId>
 			<artifactId>util.lang</artifactId>
-			<version>${project.version}</version>
+			<version>${util.lang.version}</version>
 		</dependency>
 		<dependency>
-			<groupId>log4j</groupId>
-			<artifactId>log4j</artifactId>
-			<version>${log4j.version}</version>
+			<groupId>com.jdom</groupId>
+			<artifactId>util.log.log4j</artifactId>
+			<version>${util.log.log4j.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>javax.mail</groupId>
