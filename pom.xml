@@ -4,7 +4,7 @@
 
 	<groupId>com.jdom</groupId>
 	<artifactId>util.io</artifactId>
-	<version>0.0.2</version>
+	<version>0.0.3</version>
 	<description>Common Utilities for I/O</description>
 
 	<properties>
@@ -13,7 +13,7 @@
 		<javax.mail.version>1.4.4</javax.mail.version>
 		<jibx.version>1.2.3</jibx.version>
 		<util.lang.version>0.0.2</util.lang.version>
-		<util.log.log4j.version>0.0.1</util.log.log4j.version>
+		<util.log.log4j.version>0.0.2</util.log.log4j.version>
 		<org.springframework.version>3.1.2.RELEASE</org.springframework.version>
 		<junit.version>4.10</junit.version>
 		<jmock.version>2.5.1</jmock.version>
@@ -21,6 +21,7 @@
 		<maven.jar.plugin.version>2.3.2</maven.jar.plugin.version>
 		<maven-compiler-plugin.version>2.3.2</maven-compiler-plugin.version>
 		<jdk.compliance.version>1.6</jdk.compliance.version>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
 
 	<distributionManagement>
