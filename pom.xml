@@ -1,57 +1,20 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-
-	<groupId>com.jdom</groupId>
+	<parent>
+		<groupId>com.jdom</groupId>
+		<artifactId>base.pom</artifactId>
+		<version>0.0.1</version>
+	</parent>
 	<artifactId>util.io</artifactId>
-	<version>0.0.4</version>
+	<version>0.0.5</version>
 	<description>Common Utilities for I/O</description>
-
-	<properties>
-		<commons.io.version>2.1</commons.io.version>
-		<commons.httpclient.version>3.1</commons.httpclient.version>
-		<javax.mail.version>1.4.4</javax.mail.version>
-		<jibx.version>1.2.3</jibx.version>
-		<util.lang.version>0.0.2</util.lang.version>
-		<util.log.api.version>0.0.3</util.log.api.version>
-		<org.springframework.version>3.1.2.RELEASE</org.springframework.version>
-		<junit.version>4.10</junit.version>
-		<jmock.version>2.5.1</jmock.version>
-		<maven.surefire.plugin.version>2.11</maven.surefire.plugin.version>
-		<maven.jar.plugin.version>2.3.2</maven.jar.plugin.version>
-		<maven-compiler-plugin.version>2.3.2</maven-compiler-plugin.version>
-		<jdk.compliance.version>1.6</jdk.compliance.version>
-		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-	</properties>
-
-	<distributionManagement>
-		<repository>
-			<id>releases</id>
-			<name>Internal Releases</name>
-			<url>${releases.url}</url>
-		</repository>
-		<snapshotRepository>
-			<id>snapshots</id>
-			<name>Internal Snapshots</name>
-			<url>${snapshots.url}</url>
-		</snapshotRepository>
-	</distributionManagement>
 
 	<build>
 		<plugins>
 			<plugin>
-				<artifactId>maven-compiler-plugin</artifactId>
-				<version>${maven-compiler-plugin.version}</version>
-				<configuration>
-					<source>${jdk.compliance.version}</source>
-					<target>${jdk.compliance.version}</target>
-				</configuration>
-			</plugin>
-			<!-- Override here to ALSO create a test jar -->
-			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-jar-plugin</artifactId>
-				<version>${maven.jar.plugin.version}</version>
 				<executions>
 					<execution>
 						<goals>
@@ -64,7 +27,6 @@
 			<plugin>
 				<groupId>org.jibx</groupId>
 				<artifactId>jibx-maven-plugin</artifactId>
-				<version>${jibx.version}</version>
 				<executions>
 					<execution>
 						<phase>process-test-classes</phase>
@@ -76,140 +38,53 @@
 				</executions>
 			</plugin>
 
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-surefire-plugin</artifactId>
-				<version>${maven.surefire.plugin.version}</version>
-				<configuration>
-					<excludes>
-						<exclude>
-							com/dustin/util/locator/interfaces/**/*.java
-						</exclude>
-					</excludes>
-				</configuration>
-			</plugin>
-
 		</plugins>
-		<pluginManagement>
-			<plugins>
-				<!--This plugin's configuration is used to store Eclipse m2e settings 
-					only. It has no influence on the Maven build itself. -->
-				<plugin>
-					<groupId>org.eclipse.m2e</groupId>
-					<artifactId>lifecycle-mapping</artifactId>
-					<version>1.0.0</version>
-					<configuration>
-						<lifecycleMappingMetadata>
-							<pluginExecutions>
-								<pluginExecution>
-									<pluginExecutionFilter>
-										<groupId>org.jibx</groupId>
-										<artifactId>
-											jibx-maven-plugin
-										</artifactId>
-										<versionRange>
-											[${jibx.version},)
-										</versionRange>
-										<goals>
-											<goal>test-bind</goal>
-											<goal>bind</goal>
-										</goals>
-									</pluginExecutionFilter>
-									<action>
-										<ignore></ignore>
-									</action>
-								</pluginExecution>
-							</pluginExecutions>
-						</lifecycleMappingMetadata>
-					</configuration>
-				</plugin>
-			</plugins>
-		</pluginManagement>
 	</build>
 
 	<dependencies>
 		<dependency>
 			<groupId>com.jdom</groupId>
 			<artifactId>util.lang</artifactId>
-			<version>${util.lang.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>com.jdom</groupId>
 			<artifactId>util.log.api</artifactId>
-			<version>${util.log.api.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>javax.mail</groupId>
 			<artifactId>mail</artifactId>
-			<version>${javax.mail.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>commons-httpclient</groupId>
 			<artifactId>commons-httpclient</artifactId>
-			<version>${commons.httpclient.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>commons-io</groupId>
 			<artifactId>commons-io</artifactId>
-			<version>${commons.io.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.jibx</groupId>
 			<artifactId>jibx-run</artifactId>
-			<version>${jibx.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.jibx</groupId>
 			<artifactId>jibx-extras</artifactId>
-			<version>${jibx.version}</version>
 		</dependency>
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-core</artifactId>
-			<version>${org.springframework.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-beans</artifactId>
-			<version>${org.springframework.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-context</artifactId>
-			<version>${org.springframework.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-orm</artifactId>
-			<version>${org.springframework.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-tx</artifactId>
-			<version>${org.springframework.version}</version>
-		</dependency>
+
+		<!-- Test Dependencies -->
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
-			<version>${junit.version}</version>
 			<scope>test</scope>
 		</dependency>
 		<dependency>
-			<groupId>org.jmock</groupId>
-			<artifactId>jmock</artifactId>
-			<version>${jmock.version}</version>
+			<groupId>org.powermock</groupId>
+			<artifactId>powermock-module-junit4</artifactId>
 			<scope>test</scope>
 		</dependency>
 		<dependency>
-			<groupId>org.jmock</groupId>
-			<artifactId>jmock-legacy</artifactId>
-			<version>${jmock.version}</version>
-			<scope>test</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-test</artifactId>
-			<version>${org.springframework.version}</version>
+			<groupId>org.powermock</groupId>
+			<artifactId>powermock-api-mockito</artifactId>
 			<scope>test</scope>
 		</dependency>
 
